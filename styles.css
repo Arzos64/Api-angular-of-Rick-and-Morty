@@ -1,0 +1,98 @@
+/* estilos para el body*/
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #000000; 
+    font-family: 'Orbitron', sans-serif; 
+    height: 100vh;
+  }
+
+  /* estilos para el main y contenedor de las cards que salen del javascrip */
+
+main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+/* estilos de las cards que entrega el javascrip */
+
+.card {
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.8); 
+    border: 2px solid #00FF00; 
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00FF00, 0 0 40px hsl(120, 100%, 50%), 0 0 60px #00FF00; 
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 0 30px #FF00FF, 0 0 60px #FF00FF, 0 0 90px #FF00FF; 
+  }
+  
+  .card-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .card-content {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .card-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #00FF00; 
+  }
+  
+  .card-status, .card-species {
+    font-size: 1em;
+    margin: 5px 0;
+    color: #FFFFFF; 
+  }
+
+
+
+   /* contenedor de los botones que cambian de pagina */
+  .pagination{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+  }
+
+  /* botones */
+
+  .pagination button {
+    background: linear-gradient(135deg, #1d1d1d, #3d3d3d);
+    color: #fff; 
+    border: 2px solid #00bfff; 
+    padding: 10px 20px; 
+    margin: 0 5px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+    transition: background 0.3s, transform 0.3s;
+}
+
+/* Estilo para cuando el botón está en estado hover */
+.pagination button:hover {
+    background: linear-gradient(135deg, #2d2d2d, #4d4d4d); 
+    border-color: #00bfff; 
+    transform: scale(1.05); 
+}
+
+/* Estilo para cuando el botón está deshabilitado */
+.pagination button:disabled {
+    background: linear-gradient(135deg, #4a4a4a, #6a6a6a);
+    border-color: #888;
+    cursor: not-allowed; 
+    box-shadow: none;
+}
