@@ -1,59 +1,77 @@
-// variables que se van a utilizar para la paginación
-let paginaActual = 1;
-const resultadosPorPagina = 20;
+let contador = 0;
+document.querySelector('.boton').addEventListener('click', () => { 
+    contador++;
+
+    obtenerPersonajes(personajes => { 
+        const principal = document.querySelector('section');
+        principal.innerHTML = '';
+
+        personajes.forEach(personaje => {
+            const card = document.createRange().createContextualFragment(`
+           <ul>
+           <li>Nombre: ${personaje.name}</li>
+           </ul>
+            `);
+            principal.append(card);
+        });
+    });
+});
+
+
+
 
 
 // Función para obtener los personajes de la API
-
-function obtenerPersonajes(pagina, hecho) {
-    fetch(`https://rickandmortyapi.com/api/character?page=${pagina}`) // Hacer la petición a la API y concatena para pasar la página	
-        .then(respuesta => respuesta.json())
-        .then(datos => hecho(datos))
-        .catch(error => console.error('Error al obtener los personajes:', error)); // en caso de error mostrar el error
+function obtenerPersonajes(hecho) {
+    fetch(`https://rickandmortyapi.com/api/character?page=${contador}`) // Hacer la petición a la API
+        .then(response => response.json()) // Convierte la respuesta a JSON
+        .then(datos => {
+            let personajes = datos.results;
+            hecho(personajes);// Llama a la función de callback con los datos
+        })
+        .catch(error => {
+            console.error('Hubo un problema con la petición fetch:', error);
+        });
 }
 
-function mostrarPersonajes(datos) {
-    const principal = document.querySelector('main');
-    principal.innerHTML = ''; // Limpiar los personajes existentes antes de mostrar los nuevos
+// Llamar a la función 'obtenerPersonajes' pasando una función de callback
+document.querySelector('button').addEventListener('click', () => {
+    let input = document.querySelector('input').value;
+    obtenerPersonajes(personajes => {
+        let personaje = personajes.find(personaje => personaje.name === input);
+        const principal = document.querySelector('header');
+        principal.innerHTML = '';
+       
 
-
-    //creando la estructura de los personajes consumida por la api
-    datos.results.forEach(personaje => {
-        let articulo = document.createRange().createContextualFragment(`
+       personaje = document.createRange().createContextualFragment(`
             <div class="card">
                 <img src="${personaje.image}" alt="${personaje.name}" class="card-img">
                 <div class="card-content">
                     <h2 class="card-title">${personaje.name}</h2>
+                    <br>
                     <p class="card-status">Estado: ${personaje.status}</p>
+                    <br>
                     <p class="card-species">Especie: ${personaje.species}</p>
+                    <br>
+                    <p class="card-gender">Created: ${personaje.created}</p>
+                    <br>
+                    <p class="card-gender">Gender: ${personaje.gender}</p>
                 </div>
             </div>
         `);
-        principal.append(articulo); // Agregar el personaje al contenedor principal
+        principal.append(personaje);
     });
-}
 
-
-// Función para actualizar la página de personajes
-function actualizarPagina(pagina) {
-    obtenerPersonajes(pagina, mostrarPersonajes);
-    paginaActual = pagina;
-}
-
-// Eventos para los botones de paginación (anterior y siguiente)
-document.getElementById('prev-button').addEventListener('click', () => {
-    if (paginaActual > 1) {
-        actualizarPagina(paginaActual - 1);
-    }
 });
 
-// Evento para el botón de siguiente página 
-document.getElementById('next-button').addEventListener('click', () => {
-    actualizarPagina(paginaActual + 1);
-});
 
-// Cargar la primera página inicialmente
-actualizarPagina(paginaActual);
+
+
+
+
+
+
+
 
 
 
